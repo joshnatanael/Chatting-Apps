@@ -1,9 +1,17 @@
+const {User, Message} = require('../models');
+
 class Controller{
-  static registerUser(req, res, next){
-    
+  static async registerUser(req, res, next){
+    try {
+      const {fullName, email, password, phoneNumber, role, status} = req.body;
+      const newUser = await User.create({fullName, email, password, phoneNumber, role, status});
+      res.status(201).json({fullName: newUser.fullName, email: newUser.email});
+    } catch (error) {
+      next(error)
+    }
   }
   static loginUser(req, res, next){
-    
+
   }
   static getMessages(req, res, next){
 
