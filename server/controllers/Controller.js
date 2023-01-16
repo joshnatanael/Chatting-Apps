@@ -1,3 +1,5 @@
+const { comparePassword } = require('../helpers/bcrypt');
+const { generateToken } = require('../helpers/jwt');
 const {User, Message} = require('../models');
 
 class Controller{
@@ -10,8 +12,33 @@ class Controller{
       next(error)
     }
   }
-  static loginUser(req, res, next){
-
+  static async loginUser(req, res, next){
+    try {
+      const {email, password} = req.body;
+      if(!email){
+        throw("noEmail");
+      }
+      if(!password){
+        throw("noPassword");
+      }
+      const user = await User.findOne({
+        where: {
+          email
+        }
+      });
+      if(!user){
+        throw("invalidUser")
+      }
+      const isValidPassword = comparePassword(password, user.password);
+      if(!isValidPassword){
+        throw("invalidUser");
+      }
+      const payload = {id: user.id};
+      const access_token = generateToken(payload);
+      res.status(200).json({access_token});
+    } catch (error) {
+      next(error);
+    }
   }
   static getMessages(req, res, next){
 
