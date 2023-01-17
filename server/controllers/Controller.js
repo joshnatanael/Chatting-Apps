@@ -87,8 +87,24 @@ class Controller{
       next(error);
     }
   }
-  static editMessage(req, res, next){
-
+  static async editMessage(req, res, next){
+    try {
+      const {id} = req.params;
+      const {message} = req.body;
+      await Message.update(
+        {
+          message
+        },
+        {
+          where: {
+            id
+          }
+        }
+      )
+      res.status(200).json({message: "Message sucessfully edited"})
+    } catch (error) {
+      next(error);
+    }
   }
   static deleteMessage(req, res, next){
 

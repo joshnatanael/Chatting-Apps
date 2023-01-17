@@ -30,6 +30,14 @@ function errorHandler (err, req, res, next) {
     code = 400;
     message = "Message cannot be empty";
   }
+  else if(err === "messageNotFound"){
+    code = 400;
+    message = "Message not found";
+  }
+  else if(err === "forbidden"){
+    code = 403;
+    message = "You are not authorized!";
+  }
   res.status(code).json({message});
 }
 
