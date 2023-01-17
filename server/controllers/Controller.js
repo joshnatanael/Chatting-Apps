@@ -106,8 +106,18 @@ class Controller{
       next(error);
     }
   }
-  static deleteMessage(req, res, next){
-
+  static async deleteMessage(req, res, next){
+    try {
+      const {id} = req.params;
+      await Message.destroy({
+        where: {
+          id
+        }
+      })
+      res.status(200).json({message: `Message with id ${id} successfully deleted`});
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
