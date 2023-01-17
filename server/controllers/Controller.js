@@ -1,6 +1,7 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
 const {User, Message} = require('../models');
+const { Op } = require("sequelize");
 
 class Controller{
   static async registerUser(req, res, next){
@@ -40,8 +41,34 @@ class Controller{
       next(error);
     }
   }
-  static getMessages(req, res, next){
-
+  static async getMessages(req, res, next){
+    try {
+      const {id} = req.params;
+      const messages = await Message.findAll({
+        where:{
+          [Op.or]: [
+            {
+              [Op.and]: [
+                { SenderId: req.user.id },
+                { ReceiverId: id }
+              ]
+            },
+            {
+              [Op.and]: [
+                { SenderId: id },
+                { ReceiverId: req.user.id }
+              ]
+            }
+          ]
+        },
+        order: [
+          ['createdAt', 'DESC']
+        ]
+      })
+      res.status(200).json({messages})
+    } catch (error) {
+      next(error);
+    }
   }
   static postMessage(req, res, next){
 
