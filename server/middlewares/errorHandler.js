@@ -26,6 +26,10 @@ function errorHandler (err, req, res, next) {
     code = 401;
     message = "Invalid token";
   }
+  else if(err === "noMessage"){
+    code = 400;
+    message = "Message cannot be empty";
+  }
   res.status(code).json({message});
 }
 

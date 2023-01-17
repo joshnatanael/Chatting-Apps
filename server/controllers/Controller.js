@@ -70,8 +70,22 @@ class Controller{
       next(error);
     }
   }
-  static postMessage(req, res, next){
-
+  static async postMessage(req, res, next){
+    try {
+      const {message} = req.body;
+      if(!message){
+        throw("noMessage")
+      }
+      const {id} = req.params;
+      await Message.create({
+        SenderId: req.user.id,
+        ReceiverId: id,
+        message
+      });
+      res.status(201).json({message: "Successfully sent message!"})
+    } catch (error) {
+      next(error);
+    }
   }
   static editMessage(req, res, next){
 
