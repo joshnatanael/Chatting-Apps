@@ -27,11 +27,21 @@ module.exports = {
         updatedAt: new Date()
       },
     ]);
+    await queryInterface.bulkInsert('Contacts', [
+      {
+        fullName: "User2",
+        phoneNumber: "08123123123",
+        UserId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ]);
     await queryInterface.bulkInsert('Messages', [
       {
         SenderId: 1,
         ReceiverId: 2,
         message: "test",
+        ContactId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }

@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       Message.belongsTo(models.User, {
         foreignKey: "ReceiverId"
       });
+      Message.belongsTo(models.Contact, {
+        foreignKey: "ContactId"
+      });
     }
   }
   Message.init({
@@ -52,6 +55,18 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: 'Message cannot be empty'
+        }
+      }
+    },
+    ContactId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Contact id cannot be empty'
+        },
+        notEmpty: {
+          msg: 'Contact id cannot be empty'
         }
       }
     },
