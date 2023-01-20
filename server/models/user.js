@@ -14,9 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Message, {
         foreignKey: 'SenderId'
       });
-      User.hasMany(models.Message, {
-        foreignKey: 'ReceiverId'
-      });
+      User.hasMany(models.Member);
     }
   }
   User.init({

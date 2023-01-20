@@ -27,11 +27,24 @@ module.exports = {
         updatedAt: new Date()
       },
     ]);
-    await queryInterface.bulkInsert('Contacts', [
+    await queryInterface.bulkInsert('ChatRooms', [
       {
-        fullName: "User2",
-        phoneNumber: "08123123123",
+        name: null,
+        type: "personal",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ]);
+    await queryInterface.bulkInsert('Members', [
+      {
         UserId: 1,
+        ChatRoomId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        UserId: 2,
+        ChatRoomId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -39,9 +52,8 @@ module.exports = {
     await queryInterface.bulkInsert('Messages', [
       {
         SenderId: 1,
-        ReceiverId: 2,
         message: "test",
-        ContactId: 1,
+        ChatRoomId: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -50,6 +62,8 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', null, {});
+    await queryInterface.bulkDelete('ChatRooms', null, {});
+    await queryInterface.bulkDelete('Members', null, {});
     await queryInterface.bulkDelete('Messages', null, {});
   }
 };
