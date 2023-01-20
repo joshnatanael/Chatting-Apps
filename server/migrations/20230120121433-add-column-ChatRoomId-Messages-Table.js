@@ -3,16 +3,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.addColumn('Messages', 'ContactId', {
+    await queryInterface.addColumn('Messages', 'ChatRoomId', {
       type: Sequelize.INTEGER,
+      allowNull: false,
       references: {
-        model: "Contacts",
+        model: "ChatRooms",
         key: 'id'
       }
     });
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn('Messages', 'ContactId', {});
+    await queryInterface.removeColumn('Messages', 'ChatRoomId', {});
   }
 };

@@ -2,14 +2,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Messages', {
+    await queryInterface.createTable('Members', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      SenderId: {
+      UserId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -17,8 +17,13 @@ module.exports = {
           key: 'id'
         }
       },
-      message: {
-        type: Sequelize.TEXT
+      ChatRoomId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "ChatRooms",
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +36,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Messages');
+    await queryInterface.dropTable('Members');
   }
 };
