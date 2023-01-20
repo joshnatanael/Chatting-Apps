@@ -1,6 +1,6 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
-const {User, Message} = require('../models');
+const {User, Message, Contact} = require('../models');
 const { Op } = require("sequelize");
 
 class Controller{
@@ -37,6 +37,22 @@ class Controller{
       const payload = {id: user.id};
       const access_token = generateToken(payload);
       res.status(200).json({access_token});
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async getContacts(req, res, next){
+    try {
+      const contacts = await Contact.findAll({
+        where: {
+          UserId: req.user.id
+        },
+        include: {
+          model: Message,
+          limit: 1
+        }
+      })
+      res.status(200).json(contacts)
     } catch (error) {
       next(error);
     }
