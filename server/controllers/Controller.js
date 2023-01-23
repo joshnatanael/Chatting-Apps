@@ -143,7 +143,7 @@ class Controller{
   }
   static async editMessage(req, res, next){
     try {
-      const {id} = req.params;
+      const {messagesId} = req.params;
       const {message} = req.body;
       await Message.update(
         {
@@ -151,7 +151,7 @@ class Controller{
         },
         {
           where: {
-            id
+            id: messagesId
           }
         }
       )

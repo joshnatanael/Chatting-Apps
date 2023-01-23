@@ -2,8 +2,8 @@ const {Message} = require('../models');
 
 async function authorization(req, res, next){
   try {
-    const {id} = req.params;
-    const message = await Message.findByPk(id);
+    const {messagesId} = req.params;
+    const message = await Message.findByPk(messagesId);
     if (!message) {
       throw("messageNotFound")
     }
