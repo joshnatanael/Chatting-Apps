@@ -8,7 +8,7 @@ router.post('/register', Controller.registerUser);
 router.post('/login', Controller.loginUser);
 router.use(authentication);
 router.get('/chatRooms', Controller.getChatRooms);
-// router.post('/chatRooms', Controller.postChatRooms);
+router.post('/chatRooms', Controller.postChatRooms);
 // router.delete('/chatRooms/:ChatRoomId', Controller.deleteChatRooms);
 // router.put('/chatRooms/:ChatRoomId', Controller.editChatRooms);
 router.get('/messages/:ChatRoomId', Controller.getMessages);

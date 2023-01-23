@@ -60,6 +60,25 @@ class Controller{
       next(error);
     }
   }
+  static async postChatRooms(req, res, next){
+    try {
+      const {name, type, members} = req.body;
+      members.push(req.user.id);
+      const chatRoom = await ChatRoom.create({
+        name,
+        type
+      })
+      await Member.bulkCreate(members.map(el=>{
+        return {
+          UserId: el,
+          ChatRoomId: chatRoom.id
+        }
+      }));
+      res.status(200).json({message: "Successfully created new chat room."});
+    } catch (error) {
+      next(error);
+    }
+  }
   static async getMessages(req, res, next){
     try {
       const {id} = req.params;
