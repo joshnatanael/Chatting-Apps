@@ -130,11 +130,11 @@ class Controller{
       if(!message){
         throw("noMessage")
       }
-      const {id} = req.params;
+      const {ChatRoomId} = req.params;
       await Message.create({
         SenderId: req.user.id,
-        ReceiverId: id,
-        message
+        message,
+        ChatRoomId
       });
       res.status(201).json({message: "Successfully sent message!"})
     } catch (error) {
