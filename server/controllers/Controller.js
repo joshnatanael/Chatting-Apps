@@ -1,6 +1,6 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
-const {User, Message, Contact} = require('../models');
+const {User, Message, ChatRoom, Member} = require('../models');
 const { Op } = require("sequelize");
 
 class Controller{
@@ -41,18 +41,21 @@ class Controller{
       next(error);
     }
   }
-  static async getContacts(req, res, next){
+  static async getChatRooms(req, res, next){
     try {
-      const contacts = await Contact.findAll({
+      const chatRooms = await Member.findAll({
         where: {
           UserId: req.user.id
         },
         include: {
-          model: Message,
-          limit: 1
+          model: ChatRoom,
+          include: {
+            model: Message,
+            limit: 1
+          }
         }
       })
-      res.status(200).json(contacts)
+      res.status(200).json(chatRooms);
     } catch (error) {
       next(error);
     }
