@@ -6,6 +6,8 @@ module.exports = {
     await queryInterface.addColumn('Messages', 'ChatRoomId', {
       type: Sequelize.INTEGER,
       allowNull: false,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
       references: {
         model: "ChatRooms",
         key: 'id'

@@ -79,6 +79,19 @@ class Controller{
       next(error);
     }
   }
+  static async deleteChatRoom(req, res, next){
+    try {
+      const {ChatRoomId} = req.params;
+      await ChatRoom.destroy({
+        where: {
+          id: ChatRoomId
+        }
+      })
+      res.status(200).json({message: `Successfully delete chat room with id ${ChatRoomId}.`});
+    } catch (error) {
+      next(error);
+    }
+  }
   static async getMessages(req, res, next){
     try {
       const {id} = req.params;
