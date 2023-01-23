@@ -38,6 +38,14 @@ function errorHandler (err, req, res, next) {
     code = 403;
     message = "You are not authorized!";
   }
+  else if(err === "noMember"){
+    code = 400;
+    message = "Member cannot be empty";
+  }
+  else if(err === "noChatRoom"){
+    code = 404;
+    message = "Chat room not found";
+  }
   res.status(code).json({message});
 }
 

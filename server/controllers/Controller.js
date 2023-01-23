@@ -63,6 +63,9 @@ class Controller{
   static async postChatRooms(req, res, next){
     try {
       const {name, type, members} = req.body;
+      if(!members.length){
+        throw("noMember")
+      }
       members.push(req.user.id);
       const chatRoom = await ChatRoom.create({
         name,
@@ -74,7 +77,7 @@ class Controller{
           ChatRoomId: chatRoom.id
         }
       }));
-      res.status(200).json({message: "Successfully created new chat room."});
+      res.status(201).json({message: "Successfully created new chat room."});
     } catch (error) {
       next(error);
     }
