@@ -10,7 +10,7 @@ router.use(authentication);
 router.get('/chatRooms', Controller.getChatRooms);
 router.post('/chatRooms', Controller.postChatRooms);
 router.delete('/chatRooms/:ChatRoomId', Controller.deleteChatRoom);
-// router.put('/chatRooms/:ChatRoomId', Controller.editChatRooms);
+router.put('/chatRooms/:ChatRoomId', Controller.editChatRoom);
 router.get('/messages/:ChatRoomId', Controller.getMessages);
 router.post('/messages/:ChatRoomId', Controller.postMessage);
 router.put('/messages/:messagesId', authorization, Controller.editMessage);

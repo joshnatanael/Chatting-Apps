@@ -92,6 +92,22 @@ class Controller{
       next(error);
     }
   }
+  static async editChatRoom(req, res, next){
+    try {
+      const {name, type} = req.body;
+      const {ChatRoomId} = req.params;
+      await ChatRoom.update({
+        name, type
+      }, {
+        where: {
+          id: ChatRoomId
+        }
+      })
+      res.status(200).json({message: `Successfully edit chat room with id ${ChatRoomId}.`});
+    } catch (error) {
+      next(error);
+    }
+  }
   static async getMessages(req, res, next){
     try {
       const {id} = req.params;
