@@ -162,13 +162,13 @@ class Controller{
   }
   static async deleteMessage(req, res, next){
     try {
-      const {id} = req.params;
+      const {messagesId} = req.params;
       await Message.destroy({
         where: {
-          id
+          id: messagesId
         }
       })
-      res.status(200).json({message: `Message with id ${id} successfully deleted`});
+      res.status(200).json({message: `Message with id ${messagesId} successfully deleted`});
     } catch (error) {
       next(error);
     }
