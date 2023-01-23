@@ -110,29 +110,16 @@ class Controller{
   }
   static async getMessages(req, res, next){
     try {
-      const {id} = req.params;
+      const {ChatRoomId} = req.params;
       const messages = await Message.findAll({
         where:{
-          [Op.or]: [
-            {
-              [Op.and]: [
-                { SenderId: req.user.id },
-                { ReceiverId: id }
-              ]
-            },
-            {
-              [Op.and]: [
-                { SenderId: id },
-                { ReceiverId: req.user.id }
-              ]
-            }
-          ]
+          ChatRoomId
         },
         order: [
           ['createdAt', 'DESC']
         ]
       })
-      res.status(200).json({messages})
+      res.status(200).json(messages)
     } catch (error) {
       next(error);
     }
