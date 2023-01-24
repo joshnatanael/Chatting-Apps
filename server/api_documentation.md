@@ -14,6 +14,9 @@ List of available endpoints:
 - `POST /messages/:ChatRoomId`
 - `PUT /messages/:messagesId`
 - `DELETE /messages/:messagesId`
+- `GET /contacts`
+- `POST /contacts`
+- `DELETE /contacts/:contactId`
 
 
 &nbsp;
@@ -230,7 +233,7 @@ _Response (200 - OK)_
 }
 ```
 
-_Response (400 - Bad Request)_
+_Response (404 - Not Found)_
 
 ```json
 {
@@ -273,11 +276,15 @@ _Response (400 - Bad Request)_
 
 ```json
 {
-  "message": "Chat room not found"
-}
-OR
-{
   "message": "Type chat room cannot be empty"
+}
+```
+
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "Chat room not found"
 }
 ```
 
@@ -311,7 +318,7 @@ _Response (200 - OK)_
 ]
 ```
 
-_Response (400 - Bad Request)_
+_Response (404 - Not Found)_
 
 ```json
 {
@@ -353,11 +360,15 @@ _Response (400 - Bad Request)_
 
 ```json
 {
-  "message": "Chat room not found"
-}
-OR
-{
   "message": "Message cannot be empty"
+}
+```
+
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "Chat room not found"
 }
 ```
 
@@ -395,10 +406,6 @@ _Response (400 - Bad Request)_
 
 ```json
 {
-  "message": "Message not found"
-}
-OR
-{
   "message": "Message cannot be empty"
 }
 ```
@@ -408,6 +415,14 @@ _Response (401 - Unauthorized)_
 ```json
 {
   "message": "You are not authorized!"
+}
+```
+
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "Message not found"
 }
 ```
 
@@ -433,14 +448,6 @@ _Response (200 - OK)_
 }
 ```
 
-_Response (400 - Bad Request)_
-
-```json
-{
-  "message": "Message not found"
-}
-```
-
 _Response (401 - Unauthorized)_
 
 ```json
@@ -449,7 +456,125 @@ _Response (401 - Unauthorized)_
 }
 ```
 
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "Message not found"
+}
+```
+
 &nbsp;
+
+## 11. GET /contacts
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+[
+  {
+    "id": "integer",
+    "UserId": "integer",
+    "FriendId": "integer",
+    "createdAt": "date",
+    "updatedAt": "date",
+    "User": {
+      "fullName": "string",
+      "phoneNumber": "string",
+      "status": "string"
+    }
+  }
+]
+```
+
+&nbsp;
+
+## 12. POST /contacts
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+- body:
+
+```json
+{
+  "FriendId": "integer"
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+  "message": "Successfully add to contact list"
+}
+```
+
+_Response (400 - Bad Request)_
+
+```json
+{
+  "message": "Already added as a contact"
+}
+```
+
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "User not found"
+}
+```
+
+&nbsp;
+
+## 13. DELETE /contacts/:contactId
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+  "message": "Contact with id 2 successfully deleted"
+}
+```
+
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "Contact not found"
+}
+```
+
+&nbsp;
+
 
 ## Global Error
 

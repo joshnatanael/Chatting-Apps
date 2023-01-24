@@ -31,7 +31,7 @@ function errorHandler (err, req, res, next) {
     message = "Message cannot be empty";
   }
   else if(err === "messageNotFound"){
-    code = 400;
+    code = 404;
     message = "Message not found";
   }
   else if(err === "forbidden"){
@@ -45,6 +45,18 @@ function errorHandler (err, req, res, next) {
   else if(err === "noChatRoom"){
     code = 404;
     message = "Chat room not found";
+  }
+  else if(err === "noUser"){
+    code = 404;
+    message = "User not found";
+  }
+  else if(err === "alreadyAdded"){
+    code = 400;
+    message = "Already added as a contact";
+  }
+  else if(err === "noContact"){
+    code = 404;
+    message = "Contact not found";
   }
   res.status(code).json({message});
 }

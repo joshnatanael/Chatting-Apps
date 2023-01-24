@@ -1,6 +1,6 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
-const {User, Message, ChatRoom, Member} = require('../models');
+const {User, Message, ChatRoom, Member, Contact} = require('../models');
 const { Op } = require("sequelize");
 
 class Controller{
@@ -172,6 +172,69 @@ class Controller{
         }
       })
       res.status(200).json({message: `Message with id ${messagesId} successfully deleted`});
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async getContacts(req, res, next){
+    try {
+      const contacts = await Contact.findAll({
+        where: {
+          UserId: req.user.id
+        },
+        include: {
+          model: User,
+          attributes: ["fullName", "phoneNumber", "status"]
+        }
+      })
+      res.status(200).json(contacts);
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async postContact(req, res, next){
+    try {
+      const {FriendId} = req.body;
+      const friendAccount = await User.findByPk(FriendId);
+      if(!friendAccount){
+        throw("noUser");
+      }
+      const contact = await Contact.findOne({
+        where: {
+          UserId:req.user.id,
+          FriendId
+        }
+      })
+      if(contact){
+        throw("alreadyAdded");
+      }
+      await Contact.create({
+        UserId: req.user.id,
+        FriendId
+      })
+      res.status(200).json({message: "Successfully add to contact list"});
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async deleteContact(req, res, next){
+    try {
+      const {contactId} = req.params;
+      const contact = await Contact.findOne({
+        where: {
+          UserId: req.user.id,
+          id: contactId
+        }
+      })
+      if(!contact){
+        throw("noContact")
+      }
+      await Contact.destroy({
+        where: {
+          id: contactId
+        }
+      })
+      res.status(200).json({message: `Contact with id ${contactId} successfully deleted`});
     } catch (error) {
       next(error);
     }
