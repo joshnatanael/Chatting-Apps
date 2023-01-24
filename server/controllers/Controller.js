@@ -217,6 +217,28 @@ class Controller{
       next(error);
     }
   }
+  static async deleteContact(req, res, next){
+    try {
+      const {contactId} = req.params;
+      const contact = await Contact.findOne({
+        where: {
+          UserId: req.user.id,
+          id: contactId
+        }
+      })
+      if(!contact){
+        throw("noContact")
+      }
+      await Contact.destroy({
+        where: {
+          id: contactId
+        }
+      })
+      res.status(200).json({message: `Contact with id ${contactId} successfully deleted`});
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = Controller;

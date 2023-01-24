@@ -54,6 +54,10 @@ function errorHandler (err, req, res, next) {
     code = 400;
     message = "Already added as a contact";
   }
+  else if(err === "noContact"){
+    code = 404;
+    message = "Contact not found";
+  }
   res.status(code).json({message});
 }
 
