@@ -16,5 +16,8 @@ router.get('/messages/:ChatRoomId', chatRoomFinder, Controller.getMessages);
 router.post('/messages/:ChatRoomId', chatRoomFinder, Controller.postMessage);
 router.put('/messages/:messagesId', authorization, Controller.editMessage);
 router.delete('/messages/:messagesId', authorization, Controller.deleteMessage);
+router.get('/contacts', Controller.getContacts);
+// router.post('/contacts', Controller.postContact);
+// router.delete('/contacts/:contactId', Controller.deleteContact);
 
 module.exports = router;

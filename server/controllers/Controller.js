@@ -1,6 +1,6 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
-const {User, Message, ChatRoom, Member} = require('../models');
+const {User, Message, ChatRoom, Member, Contact} = require('../models');
 const { Op } = require("sequelize");
 
 class Controller{
@@ -172,6 +172,22 @@ class Controller{
         }
       })
       res.status(200).json({message: `Message with id ${messagesId} successfully deleted`});
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async getContacts(req, res, next){
+    try {
+      const contacts = await Contact.findAll({
+        where: {
+          UserId: req.user.id
+        },
+        include: {
+          model: User,
+          attributes: ["fullName", "phoneNumber", "status"]
+        }
+      })
+      res.status(200).json(contacts);
     } catch (error) {
       next(error);
     }
