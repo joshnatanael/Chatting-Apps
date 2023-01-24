@@ -192,6 +192,31 @@ class Controller{
       next(error);
     }
   }
+  static async postContact(req, res, next){
+    try {
+      const {FriendId} = req.body;
+      const friendAccount = await User.findByPk(FriendId);
+      if(!friendAccount){
+        throw("noUser");
+      }
+      const contact = await Contact.findOne({
+        where: {
+          UserId:req.user.id,
+          FriendId
+        }
+      })
+      if(contact){
+        throw("alreadyAdded");
+      }
+      await Contact.create({
+        UserId: req.user.id,
+        FriendId
+      })
+      res.status(200).json({message: "Successfully add to contact list"});
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = Controller;
