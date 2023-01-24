@@ -31,7 +31,7 @@ function errorHandler (err, req, res, next) {
     message = "Message cannot be empty";
   }
   else if(err === "messageNotFound"){
-    code = 400;
+    code = 404;
     message = "Message not found";
   }
   else if(err === "forbidden"){
