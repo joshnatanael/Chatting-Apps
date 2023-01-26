@@ -1,8 +1,9 @@
-import HomePage from "./view/HomePage";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes";
 
 function App() {
   return (
-    <HomePage />
+    <RouterProvider router={router} />
   );
 }
 
