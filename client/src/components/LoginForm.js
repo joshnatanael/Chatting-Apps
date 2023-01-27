@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { login } from '../stores/action/actionCreator';
 
 function LoginForm() {
@@ -83,7 +83,7 @@ function LoginForm() {
           <p className="text-white text-center text-sm">
             No account?
             <a className="px-1"></a>
-            <a className="underline">Sign up</a>
+            <Link to="/register" className="underline">Sign up</Link>
           </p>
         </form>
       </div>
