@@ -2,6 +2,9 @@ import Chat from "./Chat";
 import InputMessage from "./InputMessage";
 
 function ChatRoom() {
+
+  const messages = ["start", "end", "start", "end", "start", "end", "start", "end", "start", "end", "start", "end"];
+
   return (
     <div className="w-8/12 bg-slate-700 h-screen">
       <div className="h-20 bg-slate-800 flex items-center p-5 gap-5">
@@ -12,20 +15,7 @@ function ChatRoom() {
         </div>
       </div>
       <div className="overflow-y-auto scroll-smooth p-2 h-4/5">
-        <Chat type="start" />
-        <Chat type="end" />
-        <Chat type="start" />
-        <Chat type="end" />
-        <Chat type="start" />
-        <Chat type="end" />
-        <Chat type="start" />
-        <Chat type="end" />
-        <Chat type="start" />
-        <Chat type="end" />
-        <Chat type="start" />
-        <Chat type="end" />
-        <Chat type="start" />
-        <Chat type="end" />
+        {messages.map((el, idx)=><Chat type={el} key={idx}/>)}
       </div>
 
       <InputMessage />
