@@ -1,6 +1,10 @@
 import Card from "./Card";
 
 function ContactMessage() {
+
+  // const contacts = [1, 2, 3, 4];
+  const contacts = [];
+
   return (
     <div className="w-full mt-5">
       <div className="flex items-center bg-slate-700 m-1 rounded-lg gap-2 py-1">
@@ -11,9 +15,13 @@ function ContactMessage() {
       </div>
 
       <section className="overflow-y-auto h-[90vh]">
-        <Card />
-        <Card />
-        
+        {contacts.length ? contacts.map(el => <Card key={el} />)
+          :
+          <div className="flex justify-center my-10">
+            <p className="text-white bg-white rounded-full bg-opacity-30 px-4 py-0.5">No available contact</p>
+          </div>
+        };
+
       </section>
 
     </div>
