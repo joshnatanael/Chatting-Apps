@@ -1,10 +1,26 @@
 import Card from "./Card";
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchContacts } from "../../stores/action/actionCreator";
+import Loader from "../Loader";
 
 function ContactMessage() {
 
+  const dispatch = useDispatch();
+  const [load, setLoad] = useState(true);
+
   // const contacts = [1, 2, 3, 4];
   const contacts = [];
+  useEffect(()=>{
+    dispatch(fetchContacts())
+      .then(_=>{
+        setLoad(false);
+      })
+  }, [])
 
+  if(load){
+    return <Loader />
+  }
   return (
     <div className="w-full mt-5">
       <div className="flex items-center bg-slate-700 m-1 rounded-lg gap-2 py-1">
