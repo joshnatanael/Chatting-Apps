@@ -1,18 +1,25 @@
 import Card from "./Card";
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchContacts } from "../../stores/action/actionCreator";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts, fetchMessages } from "../../stores/action/actionCreator";
 import Loader from "../Loader";
 
 function ContactMessage() {
 
+  const contacts = useSelector((state) => state.contacts);
+  const messages = useSelector((state) => state.messages);
+  const showData = useSelector((state) => state.showData);
+
   const dispatch = useDispatch();
   const [load, setLoad] = useState(true);
+  const [data, setData] = useState(messages);
 
-  // const contacts = [1, 2, 3, 4];
-  const contacts = [];
   useEffect(()=>{
-    dispatch(fetchContacts())
+    let dataToFetch = fetchMessages;
+    if(showData === "contacts"){
+      dataToFetch = fetchContacts;
+    }
+    dispatch(dataToFetch())
       .then(_=>{
         setLoad(false);
       })
@@ -31,7 +38,7 @@ function ContactMessage() {
       </div>
 
       <section className="overflow-y-auto h-[90vh]">
-        {contacts.length ? contacts.map(el => <Card key={el} />)
+        {contacts.length ? contacts.map(el => <Card key={el} userDetail={el.User} />)
           :
           <div className="flex justify-center my-10">
             <p className="text-white bg-white rounded-full bg-opacity-30 px-4 py-0.5">No available contact</p>
